@@ -7,15 +7,7 @@ import AddIcon from '@mui/icons-material/Add';
 // the base64 image encoding before calling this
 const PostDisplay = ({ posterUserName, posterUserImage, posterUserStreak, imagePostedByUser, setReactionModalOpen} : any) => {
   return (
-    <Card sx={{
-      width: 340,
-      maxWidth: 340,
-      maxHeight: 425,
-      margin: '10px',
-      overflow: 'hidden',
-      display: 'flex',
-      flexDirection: 'column',
-    }}>
+    <Card>
       <CardHeader
         avatar={posterUserImage}
         title={posterUserName}
