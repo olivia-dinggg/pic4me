@@ -1,9 +1,35 @@
 import React from 'react';
-import IconButton from '@mui/material/IconButton';
-// import CloseIcon from '@mui/icons-material/Close';
-import { Box, FormControl, InputAdornment, MenuItem, Modal, TextField, Typography, Button } from '@mui/material';
+import { Box, FormControl, InputAdornment, MenuItem, Modal, TextField, Typography, Button, Card, 
+  CardActionArea, CardActions, CardContent, CardMedia, Rating, CardHeader, IconButton } from '@mui/material';
+import AddIcon from '@mui/icons-material/Add';
 
-const PostDisplay = () => {
-
-    return <></>;
+// First need to fetch the username, user's streak and
+// the base64 image encoding before calling this
+const PostDisplay = ({ posterUserName, posterUserImage, posterUserStreak, imagePostedByUser, setReactionModalOpen} : any) => {
+  return (
+    <Card sx={{
+      width: 340,
+      maxWidth: 340,
+      maxHeight: 425,
+      margin: '10px',
+      overflow: 'hidden',
+      display: 'flex',
+      flexDirection: 'column',
+    }}>
+      <CardHeader
+        avatar={posterUserImage}
+        title={posterUserName}
+        subheader={`Streak is ${posterUserStreak}`}
+        action={
+					<IconButton onClick={() => {setReactionModalOpen(true);}}>
+						<AddIcon 
+            />
+					</IconButton>
+				}
+      />
+      <CardMedia image = {imagePostedByUser} sx={{height: 0, paddingTop: '100%'}} />
+    </Card>
+  );
 }
+
+export default PostDisplay;
