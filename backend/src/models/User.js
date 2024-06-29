@@ -18,7 +18,11 @@ const UserSchema = mongoose.Schema(
     password: {
       type: String,
       required: true
-    }
+    },
+    photos: [{
+      type: Schema.Types.ObjectId,
+      ref: 'Photo',
+    }],
   }
 );
 

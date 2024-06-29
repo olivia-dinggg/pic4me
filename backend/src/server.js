@@ -8,7 +8,7 @@ import errorHandler from './middleware.js';
 import { getData, loadData } from './datastore.js';
 
 import { userRegister } from './users.js';
-import { photoAdd, photoFind } from './photos.js';
+import { photoAdd, photoFind, photoForToday } from './photos.js';
 
 const upload = multer()
 const app = express();
@@ -54,6 +54,11 @@ app.post('/photo', upload.none(), (req, res) => {
 app.get('/photo', (req, res) => {
   const { uId, pId } = req.body;
   res.json(photoFind(uId, pId));
+});
+
+app.get('/photo', (req, res) => {
+  const { uId } = req.body;
+  res.json(photoForToday(uId));
 });
 
 // Middleware must exist AFTER all API endpoints.
