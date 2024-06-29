@@ -35,8 +35,20 @@
       "favicon": "./assets/images/favicon.png"
     },
     "plugins": [
+<<<<<<< HEAD:frontend2/app.json
+      ["expo-router"],
+      [
+        "expo-media-library",
+        {
+          "photosPermission": "Allow",
+          "savePhotosPermissions": "Allow",
+          "isAccessMediaLocationEnabled": "true"
+        }
+      ]
+=======
       "expo-router",
       "react-native-vision-camera"
+>>>>>>> aacedb50c24ad42093ea895fd64641e89f42e4f6:frontend/app.json
     ],
     "experiments": {
       "typedRoutes": true
