@@ -1,9 +1,10 @@
 import React from 'react';
 import { Box, FormControl, InputAdornment, MenuItem, Modal, TextField, Typography, Button, Card, 
-  CardActionArea, CardActions, CardContent, CardMedia, Rating, CardHeader, IconButton } from '@mui/material';
-import AddIcon from '@mui/icons-material/Add';
+  CardActionArea, CardActions, CardContent, CardMedia, Rating, CardHeader, IconButton 
+} from '@mui/material';
+import FavoriteIcon from '@mui/icons-material/Favorite'
 
-// First need to fetch the username, user's streak and
+// Fetch the username, user's streak and
 // the base64 image encoding before calling this
 const PostDisplay = ({ posterUserName, posterUserImage, posterUserStreak, imagePostedByUser, setReactionModalOpen} : any) => {
   return (
@@ -12,14 +13,12 @@ const PostDisplay = ({ posterUserName, posterUserImage, posterUserStreak, imageP
         avatar={posterUserImage}
         title={posterUserName}
         subheader={`Streak is ${posterUserStreak}`}
-        action={
-					<IconButton onClick={() => {setReactionModalOpen(true);}}>
-						<AddIcon 
-            />
-					</IconButton>
-				}
+        sx={{height: '5%'}}
       />
-      <CardMedia image = {imagePostedByUser} sx={{height: 0, paddingTop: '100%'}} />
+      <div>
+        <CardMedia component='img' image = {imagePostedByUser}
+        sx={{height: '100%', width: '100%', objectFit:'contain'}} />
+      </div>
     </Card>
   );
 }
