@@ -7,10 +7,10 @@ import multer from 'multer';
 import errorHandler from './middleware.js';
 import { getData, loadData } from './datastore.js';
 
+import { userRegister } from './users.js';
 import { photoAdd, photoFind } from './photos.js';
 
 const upload = multer()
-
 const app = express();
 app.use(json());
 app.use(cors());
@@ -37,6 +37,15 @@ const PORT = parseInt(process.env.PORT || config.port);
 const HOST = process.env.IP || 'localhost';
 
 // API Endpoints
+app.post('/auth/register', upload.none(), (req, res) => {
+  const { email, name, password } = req.body;
+  try {
+    res.json(userRegister(email, name, password));
+  } catch (err) {
+    next(err)
+  }
+});
+
 app.post('/photo', upload.none(), (req, res) => {
   const { uId, photo, date } = req.body;
   res.json(photoAdd(uId, photo, date));
@@ -48,7 +57,16 @@ app.get('/photo', (req, res) => {
 });
 
 // Middleware must exist AFTER all API endpoints.
-app.use(errorHandler());
+app.use((err, req, res, next) => {
+  // Render the error page
+  res.status(err.status || 500);
+  res.send({
+    error: {
+      status: err.status || 500,
+      message: err.message,
+    },
+  });
+});
 
 const server = app.listen(PORT, HOST, () => {
   console.log(`⚡️ Server started on port ${PORT} at ${HOST}`);
