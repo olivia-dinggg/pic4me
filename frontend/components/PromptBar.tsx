@@ -3,8 +3,8 @@ import React from 'react'
 
 const PromptBar = () => {
   const [data, setData] = React.useState({
-    category: 'none',
-    prompt: 'There is no promp at the moment. Good Work!'
+    prompt: 'There is no prompt at the moment. Please refresh!',
+    category: 'none'
   });
 
   React.useEffect(() => {
@@ -29,7 +29,7 @@ const PromptBar = () => {
       case "physical":
         return '../assets/images/exercise.png'
       default:
-        return '../assets/images/thumbs-up.png'
+        return '../assets/images/refresh.png'
     }
   }
   var border = data.category === "none" ? 'none' : '3px outset #f2b022'
@@ -43,8 +43,8 @@ const PromptBar = () => {
       display: 'inline-flex',
       alignContent: 'center',
     }}>
-      <img src={categoryToImage(data.category)} style={{ margin: '25px', marginLeft: 'auto' }}></img>
-      <Typography sx={{ my: 'auto', mr: 'auto' }}> {data.prompt} </Typography>
+      <img src={categoryToImage(data.category)} style={{ margin: '25px', marginLeft: '20px' }}></img>
+      <Typography sx={{ my: 'auto', mr: '15px' }}> {data.prompt} </Typography>
     </Box>
   )
 }
