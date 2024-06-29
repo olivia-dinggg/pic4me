@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View } from "react-native";
 import React from "react";
 
-export default function index({ userEmail, navigation }:any) {
+export default function index({ navigation, userEmail }:any) {
   React.useEffect(() => {
     if (userEmail === '') {
       navigation.navigate('RegisterPage');

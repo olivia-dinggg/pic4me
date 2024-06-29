@@ -1,13 +1,15 @@
 import React from 'react';
 import { TextField, Button, Box, Paper } from '@mui/material';
-import { router } from 'expo-router';
+import { apiCallPost } from '@/scripts/helpers';
 
 import PasswordInput from '../objects/PasswordInput';
 // import { apiCallPost } from '../../helpers';
 import PropTypes from 'prop-types';
 
-const RegisterPage = ({userEmail, setUserEmail, navigation }:any) => {
+const RegisterPage = ({ navigation, userEmail, setUserEmail }:any) => {
+  console.log(`type of setUserEmail is ${typeof setUserEmail}`)
   const [email, setEmail] = React.useState('');
+  const [name, setName] = React.useState('');
   const [password, setPassword] = React.useState('');
 
   React.useEffect(() => {
@@ -17,22 +19,20 @@ const RegisterPage = ({userEmail, setUserEmail, navigation }:any) => {
   }, [userEmail]);
 
   const register = async () => {
-    
+    const data = await apiCallPost('/auth/register',
+      {
+        email,
+        name,
+        password,
+      }
+    )
 
-    // const data = await apiCallPost('user/auth/register',
-    //   {
-    //     email,
-    //     password,
-    //     name,
-    //   }, null
-    // )
-
-    // if (data.error) {
-    //   console.log(`Error: ${data.error}`)
-    // } else {
-    //   props.setUserEmail(email);
-    //   navigation.navigate('/index');
-    // }
+    if (data.error) {
+      console.log(`Error: ${data.error}`)
+    } else {
+      setUserEmail(email);
+      navigation.navigate('/index');
+    }
   }
   const inputStyle = { width: '50%', mb: '16px' }
 
@@ -47,6 +47,12 @@ const RegisterPage = ({userEmail, setUserEmail, navigation }:any) => {
         gap={1}
       >
         <h1>Registration Page</h1>
+        <TextField
+          label='Name'
+          variant='outlined'
+          value={name}
+          onChange={e => setName(e.target.value)}
+          sx={inputStyle} />
         <TextField
           label='Email' variant='outlined'
           value={email}
@@ -63,11 +69,6 @@ const RegisterPage = ({userEmail, setUserEmail, navigation }:any) => {
       </Box >
     </Paper >
   );
-};
-
-RegisterPage.propTypes = {
-  userEmail: PropTypes.string,
-  setUserEmailToken: PropTypes.func.isRequired,
 };
 
 export default RegisterPage;
