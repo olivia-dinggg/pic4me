@@ -2,7 +2,11 @@ import mongoose from 'mongoose';
 
 const PhotoSchema = mongoose.Schema(
   {
-    p_id: {
+    pId: {
+      type: String,
+      required: true
+    },
+    uId: {
       type: String,
       required: true
     },
@@ -10,12 +14,8 @@ const PhotoSchema = mongoose.Schema(
       type: String,
       required: true
     },
-    prompt: {
-      type: String,
-      required: true
-    },
     date: {
-      type: String,
+      type: Date,
       required: true
     }
   }
