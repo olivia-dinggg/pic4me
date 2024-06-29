@@ -1,7 +1,6 @@
 
 document.getElementById('fileInput').addEventListener('change', encodeImageFileAsURL);
 function encodeImageFileAsURL() {
-    const fileInput = document.getElementById('fileInput');
     const file = fileInput.files[0];
     const reader = new FileReader();
 
