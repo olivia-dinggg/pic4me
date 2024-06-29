@@ -2,8 +2,9 @@ import config from './config.json' assert { type: "json" };
 import express, { json } from 'express';
 import mongoose from 'mongoose';
 import cors from 'cors';
-import morgan from 'morgan';
+// import morgan from 'morgan';
 import multer from 'multer';
+import HTTPError from 'http-errors';
 import errorHandler from './middleware.js';
 import { getData, loadData } from './datastore.js';
 
@@ -12,9 +13,10 @@ import { photoAdd, photoFind } from './photos.js';
 
 const upload = multer()
 const app = express();
+app.use(express.urlencoded({ extended: true }));
 app.use(json());
 app.use(cors());
-app.use(morgan('dev'));
+// app.use(morgan('dev'));
 
 const main = async () => {
   await mongoose.connect('mongodb+srv://parvyyy:pic4meteam@pic4me.ccztsj4.mongodb.net/')
@@ -37,13 +39,15 @@ const PORT = parseInt(process.env.PORT || config.port);
 const HOST = process.env.IP || 'localhost';
 
 // API Endpoints
-app.post('/auth/register', upload.none(), (req, res) => {
+app.post('/auth/register', upload.none(), async (req, res) => {
   const { email, name, password } = req.body;
   try {
-    res.json(userRegister(email, name, password));
+    const result = await userRegister(email, name, password);
+    res.json(result);
   } catch (err) {
-    next(err)
+    console.log(`Error: ${err}`);
   }
+  return;
 });
 
 app.post('/photo', upload.none(), (req, res) => {
@@ -58,14 +62,10 @@ app.get('/photo', (req, res) => {
 
 // Middleware must exist AFTER all API endpoints.
 app.use((err, req, res, next) => {
-  // Render the error page
-  res.status(err.status || 500);
-  res.send({
-    error: {
-      status: err.status || 500,
-      message: err.message,
-    },
-  });
+  // Check if the error is an HTTPError or a generic error
+  const statusCode = err.statusCode || 500;
+  const message = err.message || 'Internal Server Error';
+  res.status(statusCode).json({ error: { message } });
 });
 
 const server = app.listen(PORT, HOST, () => {
