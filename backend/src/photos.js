@@ -1,28 +1,45 @@
-import { getData } from "./datastore";
+import { getData } from "./datastore.js";
+import Photo from './models/Photo.js';
+import HTTPError from 'http-errors';
 
+import { v4 as uuidv4 } from 'uuid';
 
-const uuidv4 = require("uuid/v4")
-
-export const getPhoto = (userId, photoId) => {
-    const photo = getData().users[userId].photos.find((e) => e.photoId === photoId);
-    if (!photo) {
-        return res.status(404).json({ error: 'Photo not found.' });
+export const photoAdd = async (uId, photo, date) => {
+    if (!uId) {
+        throw HTTPError(403, 'Invalid user.')
     }
-    return photo;
+
+    if (!photo || !date) {
+        throw HTTPError(404, 'Please provide a photo & the date.')
+    }
+
+    const newPhoto = new Photo({
+        pId: uuidv4(),
+        user: uId,
+        photo: photo,
+        date: date,
+    })
+
+    try {
+        return await newPhoto.save()
+    } catch (err) {
+        throw HTTPError(404, 'Unable to find user in database.')
+    }
 }
 
-export const uploadPhoto = (userId, encodedPhoto, dateTaken, prompt) => {
-    const photoId = uuidv4();
-    const data = getData();
+export const photoFind = async (uId, pId) => {
+    try {
+        const photo = await Photo.findOne({
+            pId: pId,
+        })
 
-    if (!data[userId]) {
-        return res.status(404).json({ error: 'User does not exist' });
+        if (photo.user !== uId) {
+            throw HTTPError(404, 'Forbidden access.')
+        }
+        
+        // The '._doc' method returns the entire Photo schema.
+        return photo._doc
+    } catch (err) {
+        throw HTTPError(404, 'Photo does not exist in the database.')
     }
-
-    data[userId].photos.push({
-        photoId: photoId, 
-        photo: encodedPhoto, 
-        dateTake: dateTaken, 
-        prompt: prompt
-    })
 }
