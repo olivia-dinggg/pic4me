@@ -13,13 +13,21 @@
       "backgroundColor": "#ffffff"
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "infoPlist": {
+        "NSCameraUsageDescription": "Allow $(PRODUCT_NAME) to access your camera"
+      },
+      "bundleIdentifier": "com.anonymous.pic4me"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "permissions": [
+        "android.permission.CAMERA"
+      ],
+      "package": "com.anonymous.pic4me"
     },
     "web": {
       "bundler": "metro",
@@ -27,6 +35,7 @@
       "favicon": "./assets/images/favicon.png"
     },
     "plugins": [
+<<<<<<< HEAD:frontend2/app.json
       ["expo-router"],
       [
         "expo-media-library",
@@ -36,6 +45,10 @@
           "isAccessMediaLocationEnabled": "true"
         }
       ]
+=======
+      "expo-router",
+      "react-native-vision-camera"
+>>>>>>> aacedb50c24ad42093ea895fd64641e89f42e4f6:frontend/app.json
     ],
     "experiments": {
       "typedRoutes": true
