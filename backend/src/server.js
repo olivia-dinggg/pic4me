@@ -56,6 +56,10 @@ app.get('/photo', (req, res) => {
   res.json(photoFind(uId, pId));
 });
 
+app.get('/prompt', (req, res) => {
+  res.json(getPrompt())
+})
+
 // Middleware must exist AFTER all API endpoints.
 app.use((err, req, res, next) => {
   // Render the error page
