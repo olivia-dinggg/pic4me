@@ -7,6 +7,7 @@ import PersonIcon from '@mui/icons-material/Person';
 import HomeIcon from '@mui/icons-material/Home';
 
 export default function Navigation() {
+  // todo: actual page handling
   return (
     <Box sx={{ 
         width: '100%',

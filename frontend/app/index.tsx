@@ -1,6 +1,5 @@
 import { StyleSheet, Text, View } from "react-native";
 import {NavigationContainer} from '@react-navigation/native';
-import Navigation from './components/Navigation';
 export default function Index() {
   return (
     <View
@@ -12,7 +11,6 @@ export default function Index() {
     >
       <Text>hurehvuiehhuiuhiuhiuhiuhuhuihuih.</Text>
 
-      <Navigation/>
     </View>
   );
 }
