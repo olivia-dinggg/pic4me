@@ -1,7 +1,37 @@
+ 
+  async function getRequest(url, params) {
+    try {
+      // Construct query string from params if provided
+      if (params) {
+        const queryString = Object.keys(params)
+          .map((key) => `${encodeURIComponent(key)}=${encodeURIComponent(params[key])}`)
+          .join('&');
+        url = `${url}?${queryString}`;
+      }
+  
+      // Make the GET request using fetch
+      const response = await fetch(url, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          // Add any other headers if needed
+        },
+      });
+  
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+  
+      // Parse response body as JSON
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      console.error('Error fetching data:', error);
+      throw error;
+    }
+  }
 
-document.getElementById('fileInput').addEventListener('change', encodeImageFileAsURL);
-function encodeImageFileAsURL() {
-    const file = fileInput.files[0];
+function encodeImage(file) {
     const reader = new FileReader();
 
     reader.onloadend = function() {
@@ -17,6 +47,6 @@ function encodeImageFileAsURL() {
     }
 }
 
-function displayImageFromBase64(base64String) {
+function decodeImage(base64String) {
     return "data:image/jpeg;base64," + base64String;
 }
