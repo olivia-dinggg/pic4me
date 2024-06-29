@@ -3,9 +3,8 @@
   "compilerOptions": {
     "strict": true,
     "paths": {
-      "@/*": [
-        "./*"
-      ]
+      "@emotion/*": ["./node_modules/@emotion/*"],
+      "@/*": ["./*"]
     }
   },
   "include": [
